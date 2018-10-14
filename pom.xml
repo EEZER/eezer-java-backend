@@ -16,6 +16,7 @@
 
         <module>eezer-backend-parent</module>
         <module>eezer-backend-service</module>
+        <module>eezer-backend-api</module>
     </modules>
 
 </project>

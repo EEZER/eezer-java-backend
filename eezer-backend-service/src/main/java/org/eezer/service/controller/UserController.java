@@ -1,14 +1,17 @@
 package org.eezer.service.controller;
 
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
-import org.eezer.service.application.service.UserServiceImpl;
-import org.eezer.service.domain.model.User;
+import org.eezer.api.exception.EezerException;
+import org.eezer.api.valueobject.User;
+import org.eezer.service.application.service.ApplicationService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,21 +23,48 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 
     @Resource
-    private UserServiceImpl userService;
+    private ApplicationService applicationService;
 
     @RequestMapping(value = "/getusers", method = GET)
-    public List<User> getAllUsers() {
+    public ResponseEntity getAllUsers() {
 
         log.info("Received request /getusers.");
-        return userService.getUsers();
+
+        try {
+
+            return ResponseEntity.ok(applicationService.getUsers());
+        } catch (EezerException e) {
+
+            return ResponseEntity.badRequest().body(e.getError());
+        }
     }
 
     @RequestMapping(value = "/adduser", method = POST)
-    public User addUser(@RequestBody User user) {
+    public ResponseEntity addUser(@RequestBody User userDTO) {
 
-        log.info("Received request /adduser. Data: {}", user);
+        log.info("Received request /adduser. Data: {}", userDTO);
 
-        return userService.addUser(user);
+        try {
+
+            return ResponseEntity.ok(applicationService.addUser(userDTO));
+        } catch (EezerException e) {
+
+            return ResponseEntity.badRequest().body(e.getError());
+        }
+    }
+
+    @RequestMapping(value = "/rmuser/{username}", method = DELETE)
+    public ResponseEntity removeUser(@PathVariable(value = "username") String username) {
+
+        log.info("Received request /rmuser. Username: {}", username);
+
+        try {
+
+            return ResponseEntity.ok(applicationService.removeUser(username));
+        } catch (EezerException e) {
+
+            return ResponseEntity.badRequest().body(e.getError());
+        }
     }
 
 }

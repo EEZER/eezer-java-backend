@@ -1,12 +1,15 @@
-package org.eezer.service.application.service;
+package org.eezer.service.domain.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 
-import org.eezer.service.domain.model.User;
+import org.eezer.api.valueobject.User;
+import org.eezer.service.domain.model.UserModel;
 import org.eezer.service.domain.repository.UserRepository;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,12 +21,19 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserRepository userRepository;
 
+    @Resource
+    private ConversionService conversionService;
+
     /**
      * {@inheritDoc}
      */
     public User addUser(@NotNull User user) {
 
-        return userRepository.save(user);
+        UserModel userModel = conversionService.convert(user, UserModel.class);
+
+        userRepository.save(userModel);
+
+        return user;
     }
 
     /**
@@ -31,7 +41,7 @@ public class UserServiceImpl implements UserService {
      */
     public void removeUser(@NotNull String username) {
 
-        User user = userRepository.getByUsername(username);
+        UserModel user = userRepository.getByUsername(username);
 
         if (user != null) {
             userRepository.delete(user);
@@ -43,7 +53,8 @@ public class UserServiceImpl implements UserService {
      */
     public List<User> getUsers() {
 
-        return userRepository.findAll();
+        List<UserModel> userModelList = userRepository.findAll();
+        return Arrays.asList(conversionService.convert(userModelList, User[].class));
     }
 
 }

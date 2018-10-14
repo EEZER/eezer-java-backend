@@ -1,4 +1,4 @@
-package org.eezer.service.domain.api;
+package org.eezer.api.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,10 +7,9 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class ErrorResponse {
+public class EezerResponse {
 
     private boolean success;
-    private String message;
-    private String message_extra;
+    private Object data;
 
 }

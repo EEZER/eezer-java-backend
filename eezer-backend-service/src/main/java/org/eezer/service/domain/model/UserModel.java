@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
-import org.eezer.service.domain.api.Role;
+import org.eezer.api.enums.EezerRole;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -21,7 +21,7 @@ import lombok.ToString;
 @Document
 @ToString
 @AllArgsConstructor
-public class User {
+public class UserModel {
 
     @Id
     private String id;
@@ -36,7 +36,7 @@ public class User {
     private String password;
 
     @NotNull
-    private Role role;
+    private EezerRole role;
 
     @NotNull
     @Length(min = 3, max = 255)
