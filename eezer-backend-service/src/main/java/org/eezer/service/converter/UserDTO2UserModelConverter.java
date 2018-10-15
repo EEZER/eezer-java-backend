@@ -5,7 +5,9 @@ import java.util.Date;
 import org.eezer.api.valueobject.User;
 import org.eezer.service.domain.model.UserModel;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserDTO2UserModelConverter implements Converter<User, UserModel> {
 
     /**

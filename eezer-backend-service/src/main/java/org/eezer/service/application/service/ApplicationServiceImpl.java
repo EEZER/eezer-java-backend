@@ -8,6 +8,7 @@ import org.eezer.api.exception.EezerException;
 import org.eezer.api.response.EezerResponse;
 import org.eezer.api.valueobject.User;
 import org.eezer.service.domain.service.UserService;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -77,7 +78,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     /**
-     * Catches exceptions and converts them to a proper Eezer exception.
+     * Catch exceptions and convert them to a proper Eezer exception.
      *
      * @param e the original exception
      * @return the new Eezer exception
@@ -89,6 +90,9 @@ public class ApplicationServiceImpl implements ApplicationService {
         if (e instanceof ConstraintViolationException) {
 
             throw new EezerException(EezerErrorCode.ValidationError, e.getMessage());
+        } else if (e instanceof DuplicateKeyException) {
+
+            throw new EezerException(EezerErrorCode.UniqueIndexError, "username already exists");
         }
 
         throw new EezerException(EezerErrorCode.Unhandled, "unhandled exception");

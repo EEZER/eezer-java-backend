@@ -3,7 +3,9 @@ package org.eezer.service.converter;
 import org.eezer.api.valueobject.User;
 import org.eezer.service.domain.model.UserModel;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserModel2UserDTOConverter implements Converter<UserModel, User> {
 
     /**
