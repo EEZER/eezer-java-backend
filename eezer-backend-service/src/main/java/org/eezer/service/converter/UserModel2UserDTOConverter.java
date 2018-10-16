@@ -15,7 +15,7 @@ public class UserModel2UserDTOConverter implements Converter<UserModel, User> {
 
         return User.builder()
                 .username(source.getUsername())
-                .password(source.getPassword())
+                .password("***")
                 .role(source.getRole())
                 .realName(source.getRealName())
                 .phone(source.getPhone())

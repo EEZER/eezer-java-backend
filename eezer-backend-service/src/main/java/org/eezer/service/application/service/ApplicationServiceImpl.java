@@ -5,8 +5,12 @@ import javax.validation.ConstraintViolationException;
 
 import org.eezer.api.enums.EezerErrorCode;
 import org.eezer.api.exception.EezerException;
+import org.eezer.api.request.EezerCreateTokenRequest;
 import org.eezer.api.response.EezerResponse;
+import org.eezer.api.valueobject.Token;
 import org.eezer.api.valueobject.User;
+import org.eezer.service.domain.exception.InvalidCredentialsException;
+import org.eezer.service.domain.service.JwtService;
 import org.eezer.service.domain.service.UserService;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private JwtService jwtService;
 
     /**
      * {@inheritDoc}
@@ -37,6 +44,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     /**
      * {@inheritDoc}
      */
+    @Override
     public EezerResponse removeUser(String username) {
 
         try {
@@ -52,11 +60,30 @@ public class ApplicationServiceImpl implements ApplicationService {
     /**
      * {@inheritDoc}
      */
+    @Override
     public EezerResponse getUsers() {
 
         try {
 
             return this.toResponse(userService.getUsers());
+        } catch (Exception e) {
+
+            throw toError(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EezerResponse createToken(EezerCreateTokenRequest credentials) {
+
+        try {
+            String token = jwtService.generateAccessToken(credentials.getUsername(),
+                    credentials.getPassword());
+
+            return this.toResponse(new Token(token, credentials.getUsername()));
+
         } catch (Exception e) {
 
             throw toError(e);
@@ -85,7 +112,7 @@ public class ApplicationServiceImpl implements ApplicationService {
      */
     private EezerException toError(Exception e) {
 
-        log.error("Got an exception when processing request, e: {}", e);
+        log.error("Got an exception when processing request.", e);
 
         if (e instanceof ConstraintViolationException) {
 
@@ -93,6 +120,9 @@ public class ApplicationServiceImpl implements ApplicationService {
         } else if (e instanceof DuplicateKeyException) {
 
             throw new EezerException(EezerErrorCode.UniqueIndexError, "username already exists");
+        } else if (e instanceof InvalidCredentialsException) {
+
+            throw new EezerException(EezerErrorCode.InvalidUserOrPass, null);
         }
 
         throw new EezerException(EezerErrorCode.Unhandled, "unhandled exception");

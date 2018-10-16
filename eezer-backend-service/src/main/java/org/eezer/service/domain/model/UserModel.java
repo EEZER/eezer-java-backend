@@ -14,6 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
@@ -32,6 +33,7 @@ public class UserModel {
     private String username;
 
     @NotNull
+    @Setter
     @Length(min = 8, max = 255)
     private String password;
 

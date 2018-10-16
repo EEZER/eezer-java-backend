@@ -6,9 +6,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import javax.annotation.Resource;
 
+import org.eezer.api.enums.EezerRole;
 import org.eezer.api.exception.EezerException;
 import org.eezer.api.valueobject.User;
 import org.eezer.service.application.service.ApplicationService;
+import org.eezer.service.security.annotation.AuthSecured;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +26,7 @@ public class UserController {
     @Resource
     private ApplicationService applicationService;
 
+    @AuthSecured(role = EezerRole.ADMIN)
     @RequestMapping(value = "/getusers", method = GET)
     public ResponseEntity getAllUsers() {
 
@@ -35,6 +38,10 @@ public class UserController {
         } catch (EezerException e) {
 
             return ResponseEntity.badRequest().body(e.getError());
+        } catch (Exception e) {
+
+            log.error("Got unhandled exception. Error: {}", e);
+            throw e;
         }
     }
 
@@ -49,6 +56,10 @@ public class UserController {
         } catch (EezerException e) {
 
             return ResponseEntity.badRequest().body(e.getError());
+        } catch (Exception e) {
+
+            log.error("Got unhandled exception. Error: {}", e);
+            throw e;
         }
     }
 

@@ -1,6 +1,7 @@
 package org.eezer.service.application.service;
 
 import org.eezer.api.exception.EezerException;
+import org.eezer.api.request.EezerCreateTokenRequest;
 import org.eezer.api.response.EezerResponse;
 import org.eezer.api.valueobject.User;
 
@@ -34,4 +35,15 @@ public interface ApplicationService {
      * @throws EezerException if unsuccessful
      */
     EezerResponse getUsers();
+
+    /**
+     * Create a new token for a user.
+     *
+     * @param credentials the user credentials
+     * @return a response object if successful
+     *
+     * @throws EezerException if unsuccessful
+     */
+    EezerResponse createToken(EezerCreateTokenRequest credentials);
+
 }

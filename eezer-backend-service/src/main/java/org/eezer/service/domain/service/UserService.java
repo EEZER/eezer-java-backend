@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import org.eezer.api.valueobject.User;
 
 /**
- * The user service is resposible of handling all user requests,
+ * The user service is responsible of handling all user requests,
  * such as add user, remove user and edit user.
  */
 public interface UserService {
@@ -34,4 +34,5 @@ public interface UserService {
      * @return a list of all existing users
      */
     List<User> getUsers();
+
 }

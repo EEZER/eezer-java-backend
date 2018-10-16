@@ -10,6 +10,7 @@ import org.eezer.api.valueobject.User;
 import org.eezer.service.domain.model.UserModel;
 import org.eezer.service.domain.repository.UserRepository;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,14 +25,23 @@ public class UserServiceImpl implements UserService {
     @Resource
     private ConversionService conversionService;
 
+    @Resource
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     /**
      * {@inheritDoc}
      */
+    @Override
     public User addUser(@NotNull User user) {
 
         UserModel userModel = conversionService.convert(user, UserModel.class);
 
+        userModel.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
         userRepository.save(userModel);
+
+        // mask password before return
+        user.setPassword("***");
 
         return user;
     }
@@ -39,6 +49,7 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void removeUser(@NotNull String username) {
 
         UserModel user = userRepository.getByUsername(username);
@@ -51,6 +62,7 @@ public class UserServiceImpl implements UserService {
     /**
      * {@inheritDoc}
      */
+    @Override
     public List<User> getUsers() {
 
         List<UserModel> userModelList = userRepository.findAll();
