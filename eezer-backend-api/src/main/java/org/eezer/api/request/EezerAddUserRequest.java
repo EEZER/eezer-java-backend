@@ -1,4 +1,4 @@
-package org.eezer.api.valueobject;
+package org.eezer.api.request;
 
 import org.eezer.api.enums.EezerRole;
 
@@ -11,16 +11,15 @@ import lombok.Setter;
 @Setter
 @Builder
 @AllArgsConstructor
-public class User {
+public class EezerAddUserRequest {
 
     private String username;
-    // private String password; // we don't return password
+    private String password;
     private EezerRole role;
     private String realName;
     private String phone;
     private String email;
     private String organization;
     private String other;
-    private String createdTime;
 
 }

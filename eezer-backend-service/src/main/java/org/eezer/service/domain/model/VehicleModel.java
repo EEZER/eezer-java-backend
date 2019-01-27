@@ -3,7 +3,6 @@ package org.eezer.service.domain.model;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
-import org.eezer.api.enums.EezerRole;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -12,7 +11,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @Getter
@@ -20,38 +18,41 @@ import lombok.ToString;
 @Document
 @ToString
 @AllArgsConstructor
-public class UserModel {
+public class VehicleModel {
 
     @Id
     private String id;
 
     @NotNull
     @Indexed(unique = true)
-    @Length(min = 3, max = 255)
-    private String username;
+    @Length(min = 2, max = 255)
+    private String vehicleId;
 
     @NotNull
-    @Setter
-    @Length(min = 8, max = 255)
-    private String password;
+    private String country;
 
     @NotNull
-    private EezerRole role;
+    private String region;
 
     @NotNull
-    @Length(min = 3, max = 255)
-    private String realName;
+    private String organization;
 
     @NotNull
-    private String phone;
+    private String contact;
 
     @Email
     @NotNull
     private String email;
 
-    private String organization;
+    @NotNull
+    private String yearOfManufacture;
 
-    private String other;
+    private String address;
+
+    private String handoverDate;
+
+    private String runningTime;
 
     private String createdTime;
+
 }

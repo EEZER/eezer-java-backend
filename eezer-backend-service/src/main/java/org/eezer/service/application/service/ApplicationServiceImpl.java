@@ -5,13 +5,18 @@ import javax.validation.ConstraintViolationException;
 
 import org.eezer.api.enums.EezerErrorCode;
 import org.eezer.api.exception.EezerException;
+import org.eezer.api.request.EezerAddUserRequest;
+import org.eezer.api.request.EezerAddVehicleRequest;
 import org.eezer.api.request.EezerCreateTokenRequest;
+import org.eezer.api.request.EezerEditUserRequest;
+import org.eezer.api.request.EezerEditVehicleRequest;
 import org.eezer.api.response.EezerResponse;
 import org.eezer.api.valueobject.Token;
-import org.eezer.api.valueobject.User;
 import org.eezer.service.domain.exception.InvalidCredentialsException;
+import org.eezer.service.domain.exception.RecordNotFoundException;
 import org.eezer.service.domain.service.JwtService;
 import org.eezer.service.domain.service.UserService;
+import org.eezer.service.domain.service.VehicleService;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
@@ -25,16 +30,19 @@ public class ApplicationServiceImpl implements ApplicationService {
     private UserService userService;
 
     @Resource
+    private VehicleService vehicleService;
+
+    @Resource
     private JwtService jwtService;
 
     /**
      * {@inheritDoc}
      */
-    public EezerResponse addUser(User user) {
+    public EezerResponse addUser(EezerAddUserRequest request) {
 
         try {
 
-            return this.toResponse(userService.addUser(user));
+            return this.toResponse(userService.addUser(request));
         } catch (Exception e) {
 
             throw toError(e);
@@ -51,6 +59,21 @@ public class ApplicationServiceImpl implements ApplicationService {
 
             userService.removeUser(username);
             return this.toResponse(username);
+        } catch (Exception e) {
+
+            throw toError(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EezerResponse editUser(String username, EezerEditUserRequest request) {
+
+        try {
+
+            return this.toResponse(userService.editUser(username, request));
         } catch (Exception e) {
 
             throw toError(e);
@@ -91,6 +114,67 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EezerResponse addVehicle(EezerAddVehicleRequest request) {
+
+        try {
+
+            return this.toResponse(vehicleService.addVehicle(request));
+        } catch (Exception e) {
+
+            throw toError(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EezerResponse removeVehicle(String vehicleId) {
+
+        try {
+
+            vehicleService.removeVehicle(vehicleId);
+            return this.toResponse(vehicleId);
+        } catch (Exception e) {
+
+            throw toError(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EezerResponse editVehicle(String vehicleId, EezerEditVehicleRequest request) {
+
+        try {
+
+            return this.toResponse(vehicleService.editVehicle(vehicleId, request));
+        } catch (Exception e) {
+
+            throw toError(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EezerResponse getVehicles() {
+
+        try {
+
+            return this.toResponse(vehicleService.getVehicles());
+        } catch (Exception e) {
+
+            throw toError(e);
+        }
+    }
+
+    /**
      * Build the response object with data.
      *
      * @param data the data to include
@@ -123,6 +207,9 @@ public class ApplicationServiceImpl implements ApplicationService {
         } else if (e instanceof InvalidCredentialsException) {
 
             throw new EezerException(EezerErrorCode.InvalidUserOrPass, null);
+        } else if (e instanceof RecordNotFoundException) {
+
+            throw new EezerException(EezerErrorCode.DocumentNotFound, "document not found");
         }
 
         throw new EezerException(EezerErrorCode.Unhandled, "unhandled exception");

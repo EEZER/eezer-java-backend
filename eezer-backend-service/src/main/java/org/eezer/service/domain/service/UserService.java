@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import org.eezer.api.request.EezerAddUserRequest;
+import org.eezer.api.request.EezerEditUserRequest;
 import org.eezer.api.valueobject.User;
 
 /**
@@ -15,11 +17,11 @@ public interface UserService {
     /**
      * Create and persist a new user.
      *
-     * @param user the new users data
+     * @param request the new users data
      *
      * @return the new user object, if successful
      */
-    User addUser(@NotNull User user);
+    User addUser(@NotNull EezerAddUserRequest request);
 
     /**
      * Remove an existing user by it's username,
@@ -27,6 +29,15 @@ public interface UserService {
      * @param username the username to remove
      */
     void removeUser(@NotNull String username);
+
+    /**
+     * Edit an existing user.
+     *
+     * @param username the username to edit
+     * @param request the edited user data
+     * @return the edited user object
+     */
+    User editUser(@NotNull String username, @NotNull EezerEditUserRequest request);
 
     /**
      * Fetch all existing users in the system.

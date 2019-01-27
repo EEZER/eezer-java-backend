@@ -1,30 +1,29 @@
 package org.eezer.service.converter;
 
-import java.util.Date;
-
-import org.eezer.api.valueobject.User;
+import org.eezer.api.request.EezerAddUserRequest;
 import org.eezer.service.domain.model.UserModel;
+import org.eezer.service.util.DateUtil;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserDTO2UserModelConverter implements Converter<User, UserModel> {
+public class EezerAddUserRequest2UserModelConverter implements Converter<EezerAddUserRequest, UserModel> {
 
     /**
      * {@inheritDoc}
      */
-    public UserModel convert(User source) {
+    public UserModel convert(EezerAddUserRequest source) {
 
         return UserModel.builder()
                 .username(source.getUsername())
-                .password(source.getPassword())
                 .role(source.getRole())
                 .realName(source.getRealName())
                 .phone(source.getPhone())
                 .email(source.getEmail())
                 .organization(source.getOrganization())
                 .other(source.getOther())
-                .createdTime(new Date())
+                // add created time to user model
+                .createdTime(DateUtil.getWellFormattedNowDate())
                 .build();
     }
 }

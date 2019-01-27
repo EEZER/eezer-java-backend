@@ -1,6 +1,4 @@
-package org.eezer.api.valueobject;
-
-import org.eezer.api.enums.EezerRole;
+package org.eezer.api.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,16 +9,14 @@ import lombok.Setter;
 @Setter
 @Builder
 @AllArgsConstructor
-public class User {
+public class EezerEditUserRequest {
 
-    private String username;
-    // private String password; // we don't return password
-    private EezerRole role;
+    // Cannot edit username, password or role.
+
     private String realName;
     private String phone;
     private String email;
     private String organization;
     private String other;
-    private String createdTime;
 
 }

@@ -1,15 +1,13 @@
 package org.eezer.service.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import javax.annotation.Resource;
 
 import org.eezer.api.enums.EezerRole;
 import org.eezer.api.exception.EezerException;
-import org.eezer.api.request.EezerAddUserRequest;
-import org.eezer.api.request.EezerEditUserRequest;
+import org.eezer.api.request.EezerEditVehicleRequest;
 import org.eezer.service.application.service.ApplicationService;
 import org.eezer.service.security.annotation.AuthSecured;
 import org.springframework.http.ResponseEntity;
@@ -22,20 +20,20 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-public class UserController {
+public class VehicleController {
 
     @Resource
     private ApplicationService applicationService;
 
     @AuthSecured(role = EezerRole.ADMIN)
-    @RequestMapping(value = "/getusers", method = GET)
-    public ResponseEntity getAllUsers() {
+    @RequestMapping(value = "/addvehicle", method = POST)
+    public ResponseEntity addVehicle() {
 
-        log.info("Received request /getusers.");
+        log.info("Received request /addvehicle.");
 
         try {
 
-            return ResponseEntity.ok(applicationService.getUsers());
+            return ResponseEntity.ok(applicationService.getVehicles());
         } catch (EezerException e) {
 
             return ResponseEntity.badRequest().body(e.getError());
@@ -47,14 +45,15 @@ public class UserController {
     }
 
     @AuthSecured(role = EezerRole.ADMIN)
-    @RequestMapping(value = "/adduser", method = POST)
-    public ResponseEntity addUser(@RequestBody EezerAddUserRequest request) {
+    @RequestMapping(value = "/editvehicle/{vehicleId}", method = POST)
+    public ResponseEntity editVehicle(@PathVariable(value = "vehicleId") String vehicleId,
+                                   @RequestBody EezerEditVehicleRequest request) {
 
-        log.info("Received request /adduser.");
+        log.info("Received request /editvehicle.");
 
         try {
 
-            return ResponseEntity.ok(applicationService.addUser(request));
+            return ResponseEntity.ok(applicationService.editVehicle(vehicleId, request));
         } catch (EezerException e) {
 
             return ResponseEntity.badRequest().body(e.getError());
@@ -66,34 +65,14 @@ public class UserController {
     }
 
     @AuthSecured(role = EezerRole.ADMIN)
-    @RequestMapping(value = "/edituser/{username}", method = POST)
-    public ResponseEntity editUser(@PathVariable(value = "username") String username,
-                                   @RequestBody EezerEditUserRequest request) {
+    @RequestMapping(value = "/rmvehicle/{vehicleId}", method = DELETE)
+    public ResponseEntity removeVehicle(@PathVariable(value = "vehicleId") String vehicleId) {
 
-        log.info("Received request /edituser.");
-
-        try {
-
-            return ResponseEntity.ok(applicationService.editUser(username, request));
-        } catch (EezerException e) {
-
-            return ResponseEntity.badRequest().body(e.getError());
-        } catch (Exception e) {
-
-            log.error("Got unhandled exception.", e);
-            throw e;
-        }
-    }
-
-    @AuthSecured(role = EezerRole.ADMIN)
-    @RequestMapping(value = "/rmuser/{username}", method = DELETE)
-    public ResponseEntity removeUser(@PathVariable(value = "username") String username) {
-
-        log.info("Received request /rmuser.");
+        log.info("Received request /rmvehicle.");
 
         try {
 
-            return ResponseEntity.ok(applicationService.removeUser(username));
+            return ResponseEntity.ok(applicationService.removeVehicle(vehicleId));
         } catch (EezerException e) {
 
             return ResponseEntity.badRequest().body(e.getError());

@@ -34,25 +34,26 @@ public class JWTAuthInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
-
-        AuthSecured authenticated = handlerMethod.getMethod().getAnnotation(AuthSecured.class);
-        if (authenticated == null) {
-            return true;
-        }
-
-        log.info("Request to access secured url, url: {}", request.getContextPath());
-
         try {
+
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
+
+            AuthSecured authenticated = handlerMethod.getMethod().getAnnotation(AuthSecured.class);
+
+            if (authenticated == null) {
+                return true;
+            }
+
+            log.info("Request to access secured url, url: {}", request.getContextPath());
 
             String token = jwtService.getTokenFromAuthHeader(request.getHeader(AUTHORIZATION_HEADER));
             jwtService.validateAccessToken(token, authenticated.role().name());
 
             return true;
+
         } catch (Exception e) {
 
             this.setAuthFailedResponse(response);
-
             return false;
         }
     }

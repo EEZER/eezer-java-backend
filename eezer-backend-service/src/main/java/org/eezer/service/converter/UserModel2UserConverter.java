@@ -6,7 +6,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserModel2UserDTOConverter implements Converter<UserModel, User> {
+public class UserModel2UserConverter implements Converter<UserModel, User> {
 
     /**
      * {@inheritDoc}
@@ -15,7 +15,6 @@ public class UserModel2UserDTOConverter implements Converter<UserModel, User> {
 
         return User.builder()
                 .username(source.getUsername())
-                .password("***")
                 .role(source.getRole())
                 .realName(source.getRealName())
                 .phone(source.getPhone())

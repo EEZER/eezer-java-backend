@@ -33,7 +33,7 @@ public class JwtServiceImpl implements JwtService {
 
 	private static final long DEFAULT_JWT_VALIDITY_TIME_IN_SEC = 3600;
 	private static final String DEFAULT_ISSUER = "org.eezer";
-	private static final String DEFAULT_SECRET = "secret";
+	private static final String DEFAULT_SECRET = "superSecret123!";
 
 	private static final String JWT_ISSUER = "iss";
 	private static final String JWT_EXPIRATION = "exp";
