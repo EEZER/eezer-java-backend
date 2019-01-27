@@ -269,7 +269,7 @@ public class ApplicationServiceImpl implements ApplicationService {
             throw new EezerException(EezerErrorCode.ValidationError, e.getMessage());
         } else if (e instanceof DuplicateKeyException) {
 
-            throw new EezerException(EezerErrorCode.UniqueIndexError, "username already exists");
+            throw new EezerException(EezerErrorCode.UniqueIndexError, "identifier (username, vehicleid, transportid) already exists");
         } else if (e instanceof InvalidCredentialsException) {
 
             throw new EezerException(EezerErrorCode.InvalidUserOrPass, null);
