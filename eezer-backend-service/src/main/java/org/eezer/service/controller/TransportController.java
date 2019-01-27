@@ -8,8 +8,6 @@ import javax.annotation.Resource;
 
 import org.eezer.api.enums.EezerRole;
 import org.eezer.api.exception.EezerException;
-import org.eezer.api.request.EezerAddUserRequest;
-import org.eezer.api.request.EezerEditUserRequest;
 import org.eezer.api.request.EezerStoreTransportRequest;
 import org.eezer.service.application.service.ApplicationService;
 import org.eezer.service.security.annotation.AuthSecured;

@@ -2,6 +2,7 @@ package org.eezer.service.domain.model;
 
 import java.util.List;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.eezer.api.valueobject.Coordinate;
@@ -47,9 +48,11 @@ public class TransportModel {
     private List<Coordinate> coordinates;
 
     @NotNull
+    @Min(0)
     private Integer distance;
 
     @NotNull
+    @Min(0)
     private Integer duration;
 
     private String started;

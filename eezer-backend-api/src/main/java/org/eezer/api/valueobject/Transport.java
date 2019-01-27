@@ -1,5 +1,7 @@
 package org.eezer.api.valueobject;
 
+import org.eezer.api.enums.EezerGender;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +21,7 @@ public class Transport {
     private String vehicleId;
     private String passengerName;
     private String passengerPhone;
-    private String gender;
+    private EezerGender gender;
     private String reason;
     private Integer distance;
     private Integer duration;

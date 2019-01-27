@@ -14,6 +14,7 @@ import org.eezer.api.request.EezerStoreTransportRequest;
 import org.eezer.api.response.EezerResponse;
 import org.eezer.api.valueobject.Token;
 import org.eezer.service.domain.exception.InvalidCredentialsException;
+import org.eezer.service.domain.exception.InvalidInputException;
 import org.eezer.service.domain.exception.RecordNotFoundException;
 import org.eezer.service.domain.service.JwtService;
 import org.eezer.service.domain.service.TransportService;
@@ -276,6 +277,8 @@ public class ApplicationServiceImpl implements ApplicationService {
         } else if (e instanceof RecordNotFoundException) {
 
             throw new EezerException(EezerErrorCode.DocumentNotFound, "document not found");
+        } else if (e instanceof InvalidInputException) {
+            throw new EezerException(EezerErrorCode.ValidationError, e.getMessage());
         }
 
         throw new EezerException(EezerErrorCode.Unhandled, "unhandled exception");

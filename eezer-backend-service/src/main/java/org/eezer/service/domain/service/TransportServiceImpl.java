@@ -7,9 +7,11 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 
+import org.eezer.api.enums.EezerGender;
 import org.eezer.api.request.EezerStoreTransportRequest;
 import org.eezer.api.valueobject.Coordinate;
 import org.eezer.api.valueobject.Transport;
+import org.eezer.service.domain.exception.InvalidInputException;
 import org.eezer.service.domain.model.TransportModel;
 import org.eezer.service.domain.repository.TransportRepository;
 import org.springframework.core.convert.ConversionService;
@@ -32,6 +34,13 @@ public class TransportServiceImpl implements TransportService {
      */
     @Override
     public Transport storeTransport(@NotNull EezerStoreTransportRequest request) {
+
+        try {
+            EezerGender gender = EezerGender.valueOf(request.getGender().toUpperCase());
+            request.setGender(gender.name());
+        } catch (Exception e) {
+            throw new InvalidInputException("Gender must be either MALE or FEMALE.");
+        }
 
         TransportModel transportModel = conversionService.convert(request, TransportModel.class);
         transportRepository.save(transportModel);
