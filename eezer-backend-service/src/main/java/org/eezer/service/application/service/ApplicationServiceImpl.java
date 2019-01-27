@@ -10,11 +10,13 @@ import org.eezer.api.request.EezerAddVehicleRequest;
 import org.eezer.api.request.EezerCreateTokenRequest;
 import org.eezer.api.request.EezerEditUserRequest;
 import org.eezer.api.request.EezerEditVehicleRequest;
+import org.eezer.api.request.EezerStoreTransportRequest;
 import org.eezer.api.response.EezerResponse;
 import org.eezer.api.valueobject.Token;
 import org.eezer.service.domain.exception.InvalidCredentialsException;
 import org.eezer.service.domain.exception.RecordNotFoundException;
 import org.eezer.service.domain.service.JwtService;
+import org.eezer.service.domain.service.TransportService;
 import org.eezer.service.domain.service.UserService;
 import org.eezer.service.domain.service.VehicleService;
 import org.springframework.dao.DuplicateKeyException;
@@ -31,6 +33,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Resource
     private VehicleService vehicleService;
+
+    @Resource
+    private TransportService transportService;
 
     @Resource
     private JwtService jwtService;
@@ -168,6 +173,67 @@ public class ApplicationServiceImpl implements ApplicationService {
         try {
 
             return this.toResponse(vehicleService.getVehicles());
+        } catch (Exception e) {
+
+            throw toError(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EezerResponse storeTransport(EezerStoreTransportRequest request) {
+
+        try {
+
+            return this.toResponse(transportService.storeTransport(request));
+        } catch (Exception e) {
+
+            throw toError(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EezerResponse removeTransport(String transportId) {
+
+        try {
+
+            transportService.removeTransport(transportId);
+            return this.toResponse(transportId);
+        } catch (Exception e) {
+
+            throw toError(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EezerResponse getTransports() {
+
+        try {
+
+            return this.toResponse(transportService.getTransports());
+        } catch (Exception e) {
+
+            throw toError(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EezerResponse getCoordinates(String transportId) {
+
+        try {
+
+            return this.toResponse(transportService.getCoordinates(transportId));
         } catch (Exception e) {
 
             throw toError(e);

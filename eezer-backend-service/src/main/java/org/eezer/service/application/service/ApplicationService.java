@@ -6,6 +6,7 @@ import org.eezer.api.request.EezerAddVehicleRequest;
 import org.eezer.api.request.EezerCreateTokenRequest;
 import org.eezer.api.request.EezerEditUserRequest;
 import org.eezer.api.request.EezerEditVehicleRequest;
+import org.eezer.api.request.EezerStoreTransportRequest;
 import org.eezer.api.response.EezerResponse;
 
 public interface ApplicationService {
@@ -106,4 +107,48 @@ public interface ApplicationService {
      */
     EezerResponse getVehicles();
 
+    /*
+     * TRANSPORT REQUESTS
+     */
+
+    /**
+     * Handles a "store transport" request.
+     *
+     * @param request the store transport request
+     * @return a response object if successful
+     *
+     * @throws EezerException if unsuccessful
+     */
+    EezerResponse storeTransport(EezerStoreTransportRequest request);
+
+    /**
+     * Handles a "remove transport" request.
+     *
+     * @param transportId the transport id to remove
+     * @return a response object if successful
+     *
+     * @throws EezerException if unsuccessful
+     */
+    EezerResponse removeTransport(String transportId);
+
+    /**
+     * Handles a "get transports" request.
+     *
+     * @return a response object if successful
+     *
+     * @throws EezerException if unsuccessful
+     */
+    EezerResponse getTransports();
+
+    /**
+     * Handles a "get coordinates" request.
+     *
+     * @param transportId the transport id to
+     *                    fetch coordinates for
+     *
+     * @return a response object if successful
+     *
+     * @throws EezerException if unsuccessful
+     */
+    EezerResponse getCoordinates(String transportId);
 }

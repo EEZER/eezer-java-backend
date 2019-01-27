@@ -58,7 +58,6 @@ public class JWTAuthInterceptor extends HandlerInterceptorAdapter {
         }
     }
 
-
     private void setAuthFailedResponse(HttpServletResponse response) throws IOException {
 
         EezerErrorResponse errorResponse = new EezerErrorResponse(false,
