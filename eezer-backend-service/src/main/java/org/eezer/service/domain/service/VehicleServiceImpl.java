@@ -1,11 +1,5 @@
 package org.eezer.service.domain.service;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.validation.constraints.NotNull;
-
 import org.eezer.api.request.EezerAddVehicleRequest;
 import org.eezer.api.request.EezerEditVehicleRequest;
 import org.eezer.api.valueobject.Vehicle;
@@ -14,6 +8,11 @@ import org.eezer.service.domain.model.VehicleModel;
 import org.eezer.service.domain.repository.VehicleRepository;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Default implementation of the {@link VehicleService} interface.

@@ -1,12 +1,11 @@
 package org.eezer.service.domain.service;
 
-import java.util.List;
-
-import javax.validation.constraints.NotNull;
-
 import org.eezer.api.request.EezerAddVehicleRequest;
 import org.eezer.api.request.EezerEditVehicleRequest;
 import org.eezer.api.valueobject.Vehicle;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * The vehicle service is responsible of handling all vehicle requests,

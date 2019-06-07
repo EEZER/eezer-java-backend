@@ -1,10 +1,7 @@
 package org.eezer.service.security.interceptor;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.eezer.api.enums.EezerErrorCode;
 import org.eezer.api.response.EezerErrorResponse;
 import org.eezer.service.domain.service.JwtService;
@@ -12,9 +9,10 @@ import org.eezer.service.security.annotation.AuthSecured;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Arrays;
 
 @Slf4j
 public class JWTAuthInterceptor extends HandlerInterceptorAdapter {
@@ -47,7 +45,11 @@ public class JWTAuthInterceptor extends HandlerInterceptorAdapter {
             log.info("Request to access secured url, url: {}", request.getContextPath());
 
             String token = jwtService.getTokenFromAuthHeader(request.getHeader(AUTHORIZATION_HEADER));
-            jwtService.validateAccessToken(token, authenticated.role().name());
+            String[] userRoles = Arrays.stream(authenticated.roles())
+                    .map(Enum::name)
+                    .toArray(String[]::new);
+
+            jwtService.validateAccessToken(token, userRoles);
 
             return true;
 

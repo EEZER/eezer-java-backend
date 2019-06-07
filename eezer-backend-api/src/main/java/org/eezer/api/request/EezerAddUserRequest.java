@@ -1,11 +1,10 @@
 package org.eezer.api.request;
 
-import org.eezer.api.enums.EezerRole;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.eezer.api.enums.EezerRole;
 
 @Getter
 @Setter

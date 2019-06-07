@@ -1,8 +1,8 @@
 package org.eezer.service.domain.service;
 
-import java.util.Map;
-
 import org.eezer.service.domain.exception.InvalidTokenException;
+
+import java.util.Map;
 
 /**
  * Interface for the JWT service.
@@ -23,11 +23,11 @@ public interface JwtService {
 	 * Validate a signed access token (jwt).
 	 *
 	 * @param token the access token to validate
-     * @param role the desired role to access the resource
+     * @param roles user access roles
      *
 	 * @return the decoded payload if successful
 	 */
-	Map<String, Object> validateAccessToken(String token, String role);
+	Map<String, Object> validateAccessToken(String token, String[] roles);
 
 	/**
 	 * Get the configured token validity time (in seconds).

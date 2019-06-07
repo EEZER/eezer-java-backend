@@ -1,8 +1,6 @@
 package org.eezer.service.application.service;
 
-import javax.annotation.Resource;
-import javax.validation.ConstraintViolationException;
-
+import lombok.extern.slf4j.Slf4j;
 import org.eezer.api.enums.EezerErrorCode;
 import org.eezer.api.exception.EezerException;
 import org.eezer.api.request.EezerAddUserRequest;
@@ -23,7 +21,8 @@ import org.eezer.service.domain.service.VehicleService;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.Resource;
+import javax.validation.ConstraintViolationException;
 
 @Slf4j
 @Service

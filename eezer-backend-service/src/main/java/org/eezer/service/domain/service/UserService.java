@@ -1,12 +1,11 @@
 package org.eezer.service.domain.service;
 
-import java.util.List;
-
-import javax.validation.constraints.NotNull;
-
 import org.eezer.api.request.EezerAddUserRequest;
 import org.eezer.api.request.EezerEditUserRequest;
 import org.eezer.api.valueobject.User;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * The user service is responsible of handling all user requests,

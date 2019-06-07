@@ -1,17 +1,16 @@
 package org.eezer.service.domain.model;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Builder(toBuilder = true)

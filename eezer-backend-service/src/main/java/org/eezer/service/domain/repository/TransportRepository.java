@@ -1,10 +1,10 @@
 package org.eezer.service.domain.repository;
 
-import java.util.List;
-
 import org.eezer.service.domain.model.TransportModel;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+
+import java.util.List;
 
 public interface TransportRepository extends MongoRepository<TransportModel, String> {
 

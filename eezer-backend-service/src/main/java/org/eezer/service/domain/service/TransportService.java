@@ -1,12 +1,11 @@
 package org.eezer.service.domain.service;
 
-import java.util.List;
-
-import javax.validation.constraints.NotNull;
-
 import org.eezer.api.request.EezerStoreTransportRequest;
 import org.eezer.api.valueobject.Coordinate;
 import org.eezer.api.valueobject.Transport;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * The transport service is responsible of handling all transport related requests.

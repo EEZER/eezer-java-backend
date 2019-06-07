@@ -1,11 +1,5 @@
 package org.eezer.service.domain.service;
 
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.validation.constraints.NotNull;
-
 import org.eezer.api.request.EezerAddUserRequest;
 import org.eezer.api.request.EezerEditUserRequest;
 import org.eezer.api.valueobject.User;
@@ -15,6 +9,11 @@ import org.eezer.service.domain.repository.UserRepository;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Default implementation of the {@link UserService} interface.

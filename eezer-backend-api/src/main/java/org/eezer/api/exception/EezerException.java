@@ -1,9 +1,8 @@
 package org.eezer.api.exception;
 
+import lombok.Getter;
 import org.eezer.api.enums.EezerErrorCode;
 import org.eezer.api.response.EezerErrorResponse;
-
-import lombok.Getter;
 
 /**
  * Exception containing information to structure a error response.

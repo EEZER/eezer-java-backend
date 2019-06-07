@@ -1,12 +1,5 @@
 package org.eezer.service.domain.service;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.validation.constraints.NotNull;
-
 import org.eezer.api.enums.EezerGender;
 import org.eezer.api.request.EezerStoreTransportRequest;
 import org.eezer.api.valueobject.Coordinate;
@@ -16,6 +9,12 @@ import org.eezer.service.domain.model.TransportModel;
 import org.eezer.service.domain.repository.TransportRepository;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Default implementation of the {@link TransportService} interface.

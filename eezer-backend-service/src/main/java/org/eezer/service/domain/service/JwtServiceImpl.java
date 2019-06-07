@@ -1,12 +1,9 @@
 package org.eezer.service.domain.service;
 
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
-
-import javax.annotation.Resource;
-
+import com.auth0.jwt.JWTExpiredException;
+import com.auth0.jwt.JWTSigner;
+import com.auth0.jwt.JWTVerifier;
+import lombok.extern.slf4j.Slf4j;
 import org.eezer.service.domain.exception.InvalidCredentialsException;
 import org.eezer.service.domain.exception.InvalidTokenException;
 import org.eezer.service.domain.exception.TokenHasExpiredException;
@@ -16,11 +13,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.auth0.jwt.JWTExpiredException;
-import com.auth0.jwt.JWTSigner;
-import com.auth0.jwt.JWTVerifier;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Default implementation of the JwtService.
@@ -86,7 +84,7 @@ public class JwtServiceImpl implements JwtService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Map<String, Object> validateAccessToken(String token, String role) {
+	public Map<String, Object> validateAccessToken(String token, String[] roles) {
 
 		Map<String, Object> decodedPayload;
 
@@ -106,9 +104,9 @@ public class JwtServiceImpl implements JwtService {
                 throw new InvalidTokenException();
             }
 
-            if (role != null && !desiredRole.equals(role)) {
+            if (!Arrays.asList(roles).contains(desiredRole)) {
 
-                log.warn("The role {} does not match role for token {}", role, token);
+                log.warn("This operation requires user role {} but was not found for token {}", desiredRole, token);
                 throw new InvalidTokenException();
             }
 
@@ -161,4 +159,5 @@ public class JwtServiceImpl implements JwtService {
 		Calendar expDate = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 		return (expDate.getTimeInMillis() / 1000L) + secondsFromNow;
 	}
+
 }

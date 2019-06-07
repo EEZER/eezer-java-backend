@@ -1,11 +1,10 @@
 package org.eezer.api.valueobject;
 
-import org.eezer.api.enums.EezerGender;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.eezer.api.enums.EezerGender;
 
 @Getter
 @Setter

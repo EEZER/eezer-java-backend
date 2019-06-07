@@ -1,11 +1,6 @@
 package org.eezer.service.controller;
 
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
-import javax.annotation.Resource;
-
+import lombok.extern.slf4j.Slf4j;
 import org.eezer.api.enums.EezerRole;
 import org.eezer.api.exception.EezerException;
 import org.eezer.api.request.EezerAddUserRequest;
@@ -18,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.Resource;
+
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Slf4j
 @RestController
@@ -27,7 +26,7 @@ public class UserController {
     @Resource
     private ApplicationService applicationService;
 
-    @AuthSecured(role = EezerRole.ADMIN)
+    @AuthSecured(roles = EezerRole.ADMIN)
     @RequestMapping(value = "/getusers", method = GET)
     public ResponseEntity getAllUsers() {
 
@@ -46,7 +45,7 @@ public class UserController {
         }
     }
 
-    @AuthSecured(role = EezerRole.ADMIN)
+    @AuthSecured(roles = EezerRole.ADMIN)
     @RequestMapping(value = "/adduser", method = POST)
     public ResponseEntity addUser(@RequestBody EezerAddUserRequest request) {
 
@@ -65,7 +64,7 @@ public class UserController {
         }
     }
 
-    @AuthSecured(role = EezerRole.ADMIN)
+    @AuthSecured(roles = EezerRole.ADMIN)
     @RequestMapping(value = "/edituser/{username}", method = POST)
     public ResponseEntity editUser(@PathVariable(value = "username") String username,
                                    @RequestBody EezerEditUserRequest request) {
@@ -85,7 +84,7 @@ public class UserController {
         }
     }
 
-    @AuthSecured(role = EezerRole.ADMIN)
+    @AuthSecured(roles = EezerRole.ADMIN)
     @RequestMapping(value = "/rmuser/{username}", method = DELETE)
     public ResponseEntity removeUser(@PathVariable(value = "username") String username) {
 
