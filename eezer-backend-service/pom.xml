@@ -58,12 +58,6 @@
                 <version>${spring.version}</version>
                 <configuration>
                     <mainClass>org.eezer.service.bootstrap.Application</mainClass>
-                    <requiresUnpack>
-                        <dependency>
-                            <groupId>org.jruby</groupId>
-                            <artifactId>jruby-complete</artifactId>
-                        </dependency>
-                    </requiresUnpack>
                 </configuration>
                 <executions>
                     <execution>
