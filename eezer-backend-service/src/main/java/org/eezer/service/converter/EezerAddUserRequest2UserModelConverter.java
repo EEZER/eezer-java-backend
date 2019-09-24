@@ -1,5 +1,6 @@
 package org.eezer.service.converter;
 
+import org.eezer.api.enums.EezerRole;
 import org.eezer.api.request.EezerAddUserRequest;
 import org.eezer.service.domain.model.UserModel;
 import org.eezer.service.util.DateUtil;
@@ -16,7 +17,7 @@ public class EezerAddUserRequest2UserModelConverter implements Converter<EezerAd
 
         return UserModel.builder()
                 .username(source.getUsername())
-                .role(source.getRole())
+                .role(EezerRole.valueOf(source.getRole()))
                 .realName(source.getRealName())
                 .phone(source.getPhone())
                 .email(source.getEmail())

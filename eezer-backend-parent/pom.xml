@@ -64,14 +64,4 @@
         <slf4j.version>1.7.25</slf4j.version>
     </properties>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.version}</version>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>

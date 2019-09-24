@@ -1,8 +1,10 @@
 package org.eezer.service.domain.service;
 
+import org.eezer.api.enums.EezerRole;
 import org.eezer.api.request.EezerAddUserRequest;
 import org.eezer.api.request.EezerEditUserRequest;
 import org.eezer.api.valueobject.User;
+import org.eezer.service.domain.exception.InvalidInputException;
 import org.eezer.service.domain.exception.RecordNotFoundException;
 import org.eezer.service.domain.model.UserModel;
 import org.eezer.service.domain.repository.UserRepository;
@@ -35,6 +37,13 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User addUser(@NotNull EezerAddUserRequest request) {
+
+        try {
+            EezerRole role = EezerRole.valueOf(request.getRole().toUpperCase());
+            request.setRole(role.name());
+        } catch (Exception e) {
+            throw new InvalidInputException("Role must be either ADMIN or DRIVER.");
+        }
 
         UserModel userModel = conversionService.convert(request, UserModel.class);
         userModel.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));

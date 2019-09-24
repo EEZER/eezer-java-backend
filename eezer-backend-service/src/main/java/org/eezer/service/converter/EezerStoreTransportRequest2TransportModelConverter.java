@@ -1,5 +1,6 @@
 package org.eezer.service.converter;
 
+import org.eezer.api.enums.EezerGender;
 import org.eezer.api.request.EezerStoreTransportRequest;
 import org.eezer.service.domain.model.TransportModel;
 import org.eezer.service.util.DateUtil;
@@ -21,7 +22,7 @@ public class EezerStoreTransportRequest2TransportModelConverter implements Conve
                 .vehicleId(source.getVehicleId())
                 .passengerName(source.getPassengerName())
                 .passengerPhone(source.getPassengerPhone())
-                .gender(source.getGender())
+                .gender(EezerGender.valueOf(source.getGender()))
                 .reason(source.getReason())
                 .coordinates(source.getCoordinates())
                 .distance(source.getDistance())

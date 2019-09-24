@@ -19,7 +19,7 @@ public class EezerStoreTransportRequest {
     private String vehicleId;
     private String passengerName;
     private String passengerPhone;
-    private String gender;
+    private String gender; // EezerGender
     private String reason;
     private List<Coordinate> coordinates;
     private Integer distance;

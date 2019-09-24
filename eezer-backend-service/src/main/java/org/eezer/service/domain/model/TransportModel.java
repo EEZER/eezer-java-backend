@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import org.eezer.api.enums.EezerGender;
 import org.eezer.api.valueobject.Coordinate;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
@@ -39,7 +40,10 @@ public class TransportModel {
 
     private String passengerName;
     private String passengerPhone;
-    private String gender;
+
+    @NotNull
+    private EezerGender gender;
+
     private String reason;
 
     @NotNull
