@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -17,13 +18,13 @@ public class UserServiceTest extends SpringUnitTest {
     private UserRepository userRepository;
 
     @Test
-    public void testMongoRepository() {
+    public void testRepository() {
 
         UserModel userModel = new UserModel(null,
                 "testuser", "testpass",
                 EezerRole.ADMIN, "real name",
                 "07399999", "a@a.a", "org",
-                "other stuff", new Date().toString());
+                "other stuff", Collections.emptySet(), new Date().toString());
 
         userRepository.save(userModel);
 

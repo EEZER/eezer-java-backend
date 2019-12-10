@@ -23,6 +23,7 @@ public class EezerAddUserRequest2UserModelConverter implements Converter<EezerAd
                 .email(source.getEmail())
                 .organization(source.getOrganization())
                 .other(source.getOther())
+                .vehicles(source.getVehicles())
                 // add created time to user model
                 .createdTime(DateUtil.getWellFormattedNowDate())
                 .build();

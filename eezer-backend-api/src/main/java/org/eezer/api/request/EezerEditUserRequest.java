@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @Builder
@@ -18,5 +20,6 @@ public class EezerEditUserRequest {
     private String email;
     private String organization;
     private String other;
+    private Set<String> vehicles;
 
 }

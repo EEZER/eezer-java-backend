@@ -21,6 +21,7 @@ public class UserModel2UserConverter implements Converter<UserModel, User> {
                 .email(source.getEmail())
                 .organization(source.getOrganization())
                 .other(source.getOther())
+                .vehicles(source.getVehicles())
                 .createdTime(source.getCreatedTime())
                 .build();
     }

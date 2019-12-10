@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Getter
 @Builder(toBuilder = true)
@@ -51,6 +52,8 @@ public class UserModel {
     private String organization;
 
     private String other;
+
+    private Set<String> vehicles;
 
     private String createdTime;
 }

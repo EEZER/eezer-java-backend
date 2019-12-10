@@ -7,7 +7,9 @@ import org.eezer.api.valueobject.User;
 import org.eezer.service.domain.exception.InvalidInputException;
 import org.eezer.service.domain.exception.RecordNotFoundException;
 import org.eezer.service.domain.model.UserModel;
+import org.eezer.service.domain.model.VehicleModel;
 import org.eezer.service.domain.repository.UserRepository;
+import org.eezer.service.domain.repository.VehicleRepository;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Default implementation of the {@link UserService} interface.
@@ -27,10 +31,28 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Resource
+    private VehicleRepository vehicleRepository;
+
+    @Resource
     private ConversionService conversionService;
 
     @Resource
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private void verifyVehicleIds(Set<String> vehicles) {
+        List<VehicleModel> vehicleModels = vehicleRepository.findAll();
+
+        List<String> allVehicles = vehicleModels.stream()
+                .map(VehicleModel::getVehicleId)
+                .map(String::toUpperCase)
+                .collect(Collectors.toList());
+
+        vehicles.forEach(vehicle -> {
+            if (!allVehicles.contains(vehicle.toUpperCase())) {
+                throw new InvalidInputException("One or more of the entered vehicle ids are incorrect.");
+            }
+        });
+    }
 
     /**
      * {@inheritDoc}
@@ -39,15 +61,23 @@ public class UserServiceImpl implements UserService {
     public User addUser(@NotNull EezerAddUserRequest request) {
 
         try {
+            // check that the given role exists
             EezerRole role = EezerRole.valueOf(request.getRole().toUpperCase());
             request.setRole(role.name());
         } catch (Exception e) {
             throw new InvalidInputException("Role must be either ADMIN or DRIVER.");
         }
 
-        UserModel userModel = conversionService.convert(request, UserModel.class);
-        userModel.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
+        // check that given vehicles (if any) exists
+        verifyVehicleIds(request.getVehicles());
 
+        UserModel userModel = conversionService.convert(request, UserModel.class);
+
+        if (userModel == null) {
+            throw new InvalidInputException(("An unexpected error occurred. Could not parse request."));
+        }
+
+        userModel.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
         userRepository.save(userModel);
 
         return conversionService.convert(userModel, User.class);
@@ -76,12 +106,15 @@ public class UserServiceImpl implements UserService {
 
         if (user != null) {
 
+            verifyVehicleIds(request.getVehicles());
+
             UserModel editedUser = user.toBuilder()
                     .realName(request.getRealName() != null ? request.getRealName() : user.getRealName())
                     .phone(request.getPhone() != null ? request.getPhone() : user.getPhone())
                     .email(request.getEmail() != null ? request.getEmail() : user.getEmail())
                     .organization(request.getOrganization() != null ? request.getOrganization() : user.getOrganization())
                     .other(request.getOther() != null ? request.getOther() : user.getOther())
+                    .vehicles(request.getVehicles() != null ? request.getVehicles() : user.getVehicles())
                     .build();
 
             userRepository.save(editedUser);

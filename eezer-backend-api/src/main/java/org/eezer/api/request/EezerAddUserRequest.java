@@ -4,7 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.eezer.api.enums.EezerRole;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,5 +21,6 @@ public class EezerAddUserRequest {
     private String email;
     private String organization;
     private String other;
+    private Set<String> vehicles;
 
 }
